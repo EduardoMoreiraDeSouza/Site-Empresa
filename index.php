@@ -1,3 +1,10 @@
+<?php
+	$pdo = new PDO('mysql:mysql:host=localhost; dbname=bootstrap_projeto; port=3307', 'root', '');
+	$sobre = $pdo->prepare("SELECT * FROM `tb_sobre`");
+	$sobre->execute();
+	$sobre = $sobre->fetch()['sobre'];
+?>
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -125,6 +132,7 @@
 					<h2>Diferencial #3</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				</div>  -->
+				<?= $sobre ?>
 			</div>
 		</div>
 	</section>
@@ -132,66 +140,34 @@
 		<h2>Equipe</h2>
 		<div class="container equipe-container">
 			<div class="row">
+				<?php
+
+				$selectMembros = $pdo->prepare("SELECT * FROM `tb_equipe`");
+				$selectMembros -> execute();
+				$membros = $selectMembros->fetchAll();
+
+				for ($i = 0; $i < count($membros); $i++) {
+
+				?>
+
 				<div class="col-md-6">
 					<div class="equipe-single">
 						<div class="row">
 							<div class="col-md-2">
 								<div class="user-picture">
-									<div class="user-child" style="background: url(&quot;assets/img/photo-1534528741775-53994a69daeb.jpg&quot;) center / cover no-repeat;"></div>
+									<div class="user-child" style="background: url(&quot;assets/img/<?= $membros[$i]['nome'] ?>.jpg&quot;) center / cover no-repeat;"></div>
 								</div>
 							</div>
 							<div class="col-md-10">
-								<h3>Emily Gabriele</h3>
-								<p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+								<h3><?= $membros[$i]['nome'] ?></h3>
+								<p style="text-align: justify;"><?= $membros[$i]['descricao'] ?></p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="equipe-single">
-						<div class="row">
-							<div class="col-md-2">
-								<div class="user-picture">
-									<div class="user-child" style="background: url(&quot;assets/img/photo-1539571696357-5a69c17a67c6.jpg&quot;) center / cover no-repeat;"></div>
-								</div>
-							</div>
-							<div class="col-md-10">
-								<h3>Miguel de Lima</h3>
-								<p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="equipe-single">
-						<div class="row">
-							<div class="col-md-2">
-								<div class="user-picture">
-									<div class="user-child" style="background: url(&quot;assets/img/photo-1494790108377-be9c29b29330.jpg&quot;) center / cover no-repeat;"></div>
-								</div>
-							</div>
-							<div class="col-md-10">
-								<h3>Maria Eduarda</h3>
-								<p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="equipe-single">
-						<div class="row">
-							<div class="col-md-2">
-								<div class="user-picture">
-									<div class="user-child" style="background: url(&quot;assets/img/photo-1501196354995-cbb51c65aaea.jpg&quot;) center / cover no-repeat;"></div>
-								</div>
-							</div>
-							<div class="col-md-10">
-								<h3>Eduardo Souza</h3>
-								<p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-							</div>
-						</div>
-					</div>
-				</div>
+
+				<?php } ?>
+
 			</div>
 		</div>
 	</section>
